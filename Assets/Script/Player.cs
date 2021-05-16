@@ -6,9 +6,18 @@ public class Player : MonoBehaviour
 {
     public float speed;
     public float jumpPower = 15.0f;
-    public float dodgeSpeed = 4.0f;
+    private float dodgeSpeed = 4.0f;
     public GameObject[] weapons;
     public bool[] hasWeapons;
+    public GameObject[] shields;
+    public int hasShields;
+
+    public int health;
+    public int shield;
+    public int coin;
+    public int maxHealth;
+    private int maxShield = 4;
+    private int maxCoin = 99999;
 
     private float hAxis;
     private float vAxis;
@@ -22,6 +31,9 @@ public class Player : MonoBehaviour
     private bool sDown1;
     private bool sDown2;
     private bool sDown3;
+    private bool skillDown1;
+    private bool skillDown2;
+    private bool skillDown3;
 
     private Vector3 moveVec;
     private Vector3 dodgeVec;
@@ -31,7 +43,7 @@ public class Player : MonoBehaviour
 
     private GameObject nearObject;
     private GameObject equipWeapon;
-    private int equiqWeaponIndex = 0;
+    //private int equiqWeaponIndex = 0;
 
     private void Awake()
     {
@@ -99,7 +111,7 @@ public class Player : MonoBehaviour
             anim.SetTrigger("doDodge");
             isDodge = true;
             //Invoke() 함수로 시간차 함수 호출
-            Invoke("DodgeOut", 0.5f);
+            Invoke(nameof(DodgeOut), 0.5f);
         }
     }
 
@@ -151,6 +163,36 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("isJump", false);
             isJump = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Item")
+        {
+            Item item = other.GetComponent<Item>();
+            switch (item.type)
+            {
+                //case Item.Type.Shield:
+                //    shields[hasShields].SetActive(true);
+                //    hasShields += item.value;
+                //    if (shield > maxShield)
+                //        shield = maxShield;
+                //    break;
+
+                case Item.Type.Coin:
+                    coin += item.value;
+                    if (coin > maxCoin)
+                        coin = maxCoin;
+                    break;
+
+                case Item.Type.Heart:
+                    health += item.value;
+                    if (health > maxHealth)
+                        health = maxHealth;
+                    break;
+            }
+            Destroy(other.gameObject);
         }
     }
 
