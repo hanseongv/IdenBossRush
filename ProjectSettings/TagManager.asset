@@ -8,6 +8,8 @@ TagManager:
   - Item
   - Weapon
   - Melee
+  - Wall
+  - Staff
   layers:
   - Default
   - TransparentFX
