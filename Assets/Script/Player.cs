@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public bool[] hasWeapons;
     public GameObject[] shields;
     public int hasShields;
-
+    public Camera followCamera;
     public int health;
     public int shield;
     public int coin;
@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     private bool isJump;
     private bool isDodge;
     private bool isFireReady = true;
+    private bool isBorder;
     private Vector3 moveVec;
     private Vector3 dodgeVec;
 
@@ -49,10 +50,7 @@ public class Player : MonoBehaviour
     private GameObject nearObject;
     private Weappon equipWeapon;
 
-    //private int equiqWeaponIndex = 0;
     private float fireDelay;
-
-    //float fireSpeed;
 
     private void Awake()
     {
@@ -111,15 +109,28 @@ public class Player : MonoBehaviour
             moveVec = dodgeVec;
         if (!isFireReady)
             moveVec = Vector3.zero;
-
-        transform.position += moveVec * (wDown ? 0.2f : 1f) * speed * Time.deltaTime;
+        if (!isBorder)
+            transform.position += moveVec * (wDown ? 0.2f : 1f) * speed * Time.deltaTime;
         anim.SetBool("isRun", moveVec != Vector3.zero);
         anim.SetBool("isWalk", wDown);
     }
 
     private void Trun()
     {
+        // 키보드로 회전
         transform.LookAt(transform.position + moveVec);
+        //마우스로 회전
+        Ray ray = followCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit rayHit;
+        if (fDown)
+        {
+            if (Physics.Raycast(ray, out rayHit, 100))
+            {
+                Vector3 nextVec = rayHit.point - transform.position;
+                nextVec.y = 0;
+                transform.LookAt(transform.position + nextVec);
+            }
+        }
     }
 
     private void Jump()
@@ -186,6 +197,26 @@ public class Player : MonoBehaviour
                 Destroy(nearObject);
             }
         }
+    }
+
+    private void FreezeRotation()
+    {
+        // angularVelocity = 물리 회전 속도 Vector3.zero=0으로 만듦
+        rigid.angularVelocity = Vector3.zero;
+    }
+
+    private void FixedUpdate()
+    {
+        //FreezeRotation 사용시 회전, 이동 값이 지속적으로 증가하는 오류(?)가 발생
+        //FreezeRotation();
+        StopToWall();
+    }
+
+    private void StopToWall()
+    {
+        Debug.DrawRay(transform.position, transform.forward * 1, Color.green);
+        //wall을 만나면 Raycast가 트루로 변함 (Move 함수 확인)
+        isBorder = Physics.Raycast(transform.position, transform.forward, 1, LayerMask.GetMask("Wall"));
     }
 
     private void OnCollisionEnter(Collision collision)

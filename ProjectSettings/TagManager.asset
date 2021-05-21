@@ -10,6 +10,7 @@ TagManager:
   - Melee
   - Wall
   - Staff
+  - Volt
   layers:
   - Default
   - TransparentFX
@@ -17,10 +18,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Floor
+  - Player
+  - PlayerVolt
+  - Wall
   - 
   - 
   - 

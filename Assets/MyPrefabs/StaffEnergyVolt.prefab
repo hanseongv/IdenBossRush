@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 6805238371749914815}
   - component: {fileID: 6805238371749914814}
   - component: {fileID: 6805238371749914800}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: StaffEnergyVolt
-  m_TagString: Untagged
+  m_TagString: Volt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -386,9 +386,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8824808124445894175, guid: 68442fad4b1d22a41966ffd081049f31, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8824996873285166041, guid: 68442fad4b1d22a41966ffd081049f31, type: 3}
       propertyPath: m_Name
       value: Particle attractor 003 lightning
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824996873285166041, guid: 68442fad4b1d22a41966ffd081049f31, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8825324623159425515, guid: 68442fad4b1d22a41966ffd081049f31, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8825417777184885865, guid: 68442fad4b1d22a41966ffd081049f31, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8929032435743072511, guid: 68442fad4b1d22a41966ffd081049f31, type: 3}
       propertyPath: target
