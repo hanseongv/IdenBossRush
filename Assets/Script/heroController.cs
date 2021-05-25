@@ -24,7 +24,7 @@ public class heroController : MonoBehaviour
     private bool isFireReady;
     private float fireDelay;
 
-    private Weappon equippWeapon;
+    private Weapon equippWeapon;
 
     private void Awake()
     {

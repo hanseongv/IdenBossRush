@@ -48,8 +48,8 @@ public class Player : MonoBehaviour
     private Animator anim;
 
     private GameObject nearObject;
-    private Weappon equipWeapon;
-
+    private Weapon equipWeapon;
+    private int weaponIndex = 0;
     private float fireDelay;
 
     private void Awake()
@@ -81,8 +81,8 @@ public class Player : MonoBehaviour
         if (fDown && isFireReady && !isDodge)
         {
             equipWeapon.Use();
-            if (equipWeapon.type == Weappon.Type.Melle) anim.SetTrigger("doSwing");
-            if (equipWeapon.type == Weappon.Type.Staff) anim.SetTrigger("doStaff");
+            if (equipWeapon.type == Weapon.Type.Melle) anim.SetTrigger("doSwing");
+            if (equipWeapon.type == Weapon.Type.Staff) anim.SetTrigger("doStaff");
             fireDelay = 0;
         }
     }
@@ -165,23 +165,32 @@ public class Player : MonoBehaviour
 
     private void Swap()
     {
-        int weaponIndex = 0;
+        //int weaponIndex = 0;
         if (sDown1) weaponIndex = 1;
         if (sDown2) weaponIndex = 2;
         if (sDown3) weaponIndex = 3;
-
+        // 그 무기를 가지고 있고, 동작 없을 때
         if (hasWeapons[weaponIndex] == true && (sDown1 || sDown2 || sDown3) && !isJump && !isDodge && isFireReady)
         {
             if (equipWeapon != null) // 현재 웨폰 있을 때
-                equipWeapon.gameObject.SetActive(false); // 아이템 off로
-
-            if (equipWeapon != weapons[weaponIndex]) // 현재 웨폰이 바꾸려는 웨폰과 같지 않을 때
             {
-                equipWeapon = weapons[weaponIndex].GetComponent<Weappon>();
+                equipWeapon.gameObject.SetActive(false); // 아이템 off로
+                Debug.Log("실행1");
+            }
+
+            if (equipWeapon != weapons[weaponIndex].GetComponent<Weapon>()/*weapons[weaponIndex]*/) // 현재 웨폰이 바꾸려는 웨폰과 같지 않을 때
+            {
+                equipWeapon = weapons[weaponIndex].GetComponent<Weapon>();
                 equipWeapon.gameObject.SetActive(true); // 아이템 on으로
+                Debug.Log("실행2");
             }
             else
-                equipWeapon = weapons[0].GetComponent<Weappon>();
+            {
+                equipWeapon = null;
+                //equipWeapon = weapons[0].GetComponent<Weapon>();
+                //equipWeapon.gameObject.SetActive(true);
+                Debug.Log("실행3");
+            }
         }
     }
 
